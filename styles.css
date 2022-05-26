@@ -14,7 +14,7 @@ nav .grid {
   grid-template: 1fr 1fr/1fr 1fr;
 }
 nav .grid input {
-  padding: 5px;
+  padding: 1px;
 }
 nav .error {
   color: red;
@@ -35,6 +35,10 @@ nav button {
   font-size: 7rem;
   text-align: center;
   border: 1px solid black;
+}
+
+.declareWin {
+  margin: 0 50%;
 }
 
 /*# sourceMappingURL=styles.css.map */

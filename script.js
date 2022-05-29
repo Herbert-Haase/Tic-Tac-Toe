@@ -30,11 +30,6 @@ const startNewGame = (() => {
     const inputName2 = document.querySelector('[placeholder="Player Name 2"]');
     playerNames = [];
 
-    const _resetDeclaration = () => {
-        const declareWin = document.querySelector(".declareWin");
-        declareWin.textContent = "";
-    }
-
     const _errorInput = () => {
         const error1 = document.querySelector(".errorone");
         const error2 = document.querySelector(".errortwo");
@@ -72,9 +67,8 @@ const startNewGame = (() => {
     _start()
     _putPlayerNamesTogether();
     gameBoard.resetValue();
-    _resetDeclaration
     displayController.resetStat();
-
+    displayController.announce("");
 }
     
     return {errorCheck, playerNames};
@@ -114,13 +108,13 @@ const displayController = (() => {
         fields.forEach((field) => {
         field.removeEventListener('click', makeAMove, {once:true})});
     }
-    const _announce = (str) => {
+    const announce = (str) => {
         const declareWin = document.querySelector(".declareWin");
         declareWin.textContent = str;
     }
     const _draw = () => {
         const draw = `${player[0].name}'s and ${player[1].name}'s match has ended in a draw.`;
-        _announce(draw);
+        announce(draw);
     }
     const _algorythm = (move, index) => {
         const filledOut = (move) => typeof move === String;
@@ -153,7 +147,7 @@ const displayController = (() => {
               _draw()            
             default:
               console.table(stat);
-              console.log("undecided", player[0].win())
+              console.log("undecided")
               return "undecided";
         }
     }
@@ -166,11 +160,11 @@ const displayController = (() => {
             declare = player[0].win();
         } else declare = player[1].win();
 
-        _announce(declare);
+        announce(declare);
         _cleanUp();
     }
 
-    return {declareEnd, resetStat};
+    return {declareEnd, resetStat, announce};
 
 })();
 

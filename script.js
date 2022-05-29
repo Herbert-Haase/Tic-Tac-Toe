@@ -98,10 +98,10 @@ function makeAMove() {
 const displayController = (() => {
     const player = startNewGame.playerNames;
     const fields = document.querySelectorAll("[data-field]");
-    let stat = [];
+    let stat = {};
 
     const resetStat = () => {
-        stat = [];
+        stat = {};
     }
 
     const _cleanUp = () => {
@@ -117,37 +117,28 @@ const displayController = (() => {
         announce(draw);
     }
     const _algorythm = (move, index) => {
-        const filledOut = (move) => typeof move === String;
+
+
         stat[index] = move;
         switch(true) {
             case(stat[0] === move && stat[1] === move && stat[2] === move):
             case(stat[3] === move && stat[4] === move && stat[5] === move):
             case(stat[6] === move && stat[7] === move && stat[8] === move):
-        console.table(stat);
-        console.log("row");
               return move;
               break;
             case(stat[0] === move && stat[3] === move && stat[6] === move):
             case(stat[1] === move && stat[4] === move && stat[7] === move):
             case(stat[2] === move && stat[5] === move && stat[8] === move):
-        console.log(stat);
-        console.log("column");
               return move;
               break;
             case(stat[0] === move && stat[4] === move && stat[8] === move):
             case(stat[2] === move && stat[4] === move && stat[6] === move):
-        console.log(stat);
-        console.log("diagonal");
               return move;
               break;
             
-            case(stat.every(filledOut) && stat.length === 9):
-              console.log(stat);
-              console.log("draw");
+            case(Object.keys(stat).length === 9):
               _draw()            
             default:
-              console.table(stat);
-              console.log("undecided")
               return "undecided";
         }
     }

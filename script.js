@@ -1,22 +1,25 @@
 const gameBoard = (() => {
-    let value = 0;
+    let value = 1;
+    const resetValue = () => {
+        value = 1;
+        return value;
+    }
     const _switching = () => {
             value++;
             return value;
     }
     const move = () => {
-        return _switching() % 2 === 0;
+        return _switching() % 2 === 0? "O":"X";
     }
     const field = () =>{
         return document.querySelectorAll("[data-field]");
     }
-    return {move, field};
+    return {move, field, resetValue};
 })();
 
 const players = (name) => {
     const win = () => {
-        const declareWin = document.querySelector(".declareWin");
-        declareWin.textContent = `${name} won this match.`;
+        return `${name} won this match.`;
     }
     return {name, win};
 }
@@ -26,6 +29,11 @@ const startNewGame = (() => {
     const inputName1 = document.querySelector('[placeholder="Player Name 1"]');
     const inputName2 = document.querySelector('[placeholder="Player Name 2"]');
     playerNames = [];
+
+    const _resetDeclaration = () => {
+        const declareWin = document.querySelector(".declareWin");
+        declareWin.textContent = "";
+    }
 
     const _errorInput = () => {
         const error1 = document.querySelector(".errorone");
@@ -63,6 +71,10 @@ const startNewGame = (() => {
 
     _start()
     _putPlayerNamesTogether();
+    gameBoard.resetValue();
+    _resetDeclaration
+    displayController.resetStat();
+
 }
     
     return {errorCheck, playerNames};
@@ -71,18 +83,14 @@ const startNewGame = (() => {
 function makeAMove() {
     const move = gameBoard.move();
     _colorOs(move,this);
-    this.textContent = transcribe(move);
+    this.textContent = move;
 
-    let field = this.getAttribute("data-field");
-    field = parseInt(field);
-    displaController.declareEnd(move, field);
-
-    function transcribe(XO) {
-        return XO? "O":"X";
-    }
+    let index = this.getAttribute("data-field");
+    index = parseInt(index);
+    displayController.declareEnd(move, index);
 
     function _colorOs(move,ele) {
-        if(move) {
+        if(move === "O") {
             ele.style.color = "#0284c7";
         }
     }
@@ -93,17 +101,78 @@ function makeAMove() {
     button.addEventListener("click", startNewGame.errorCheck);
 })()
 
-const displaController = (() => {
+const displayController = (() => {
     const player = startNewGame.playerNames;
-    const _cleanUp = () => {
-        field.removeEventListener('click', makeAMove, {once:true});
-    }
-    const _draw = () => {
-        const declareWin = document.querySelector(".declareWin");
-        declareWin.textContent = `${player[0].name}'s and ${player[1].name}'s match has ended in a draw.`;
+    const fields = document.querySelectorAll("[data-field]");
+    let stat = [];
+
+    const resetStat = () => {
+        stat = [];
     }
 
-})
+    const _cleanUp = () => {
+        fields.forEach((field) => {
+        field.removeEventListener('click', makeAMove, {once:true})});
+    }
+    const _announce = (str) => {
+        const declareWin = document.querySelector(".declareWin");
+        declareWin.textContent = str;
+    }
+    const _draw = () => {
+        const draw = `${player[0].name}'s and ${player[1].name}'s match has ended in a draw.`;
+        _announce(draw);
+    }
+    const _algorythm = (move, index) => {
+        const filledOut = (move) => typeof move === String;
+        stat[index] = move;
+        switch(true) {
+            case(stat[0] === move && stat[1] === move && stat[2] === move):
+            case(stat[3] === move && stat[4] === move && stat[5] === move):
+            case(stat[6] === move && stat[7] === move && stat[8] === move):
+        console.table(stat);
+        console.log("row");
+              return move;
+              break;
+            case(stat[0] === move && stat[3] === move && stat[6] === move):
+            case(stat[1] === move && stat[4] === move && stat[7] === move):
+            case(stat[2] === move && stat[5] === move && stat[8] === move):
+        console.log(stat);
+        console.log("column");
+              return move;
+              break;
+            case(stat[0] === move && stat[4] === move && stat[8] === move):
+            case(stat[2] === move && stat[4] === move && stat[6] === move):
+        console.log(stat);
+        console.log("diagonal");
+              return move;
+              break;
+            
+            case(stat.every(filledOut) && stat.length === 9):
+              console.log(stat);
+              console.log("draw");
+              _draw()            
+            default:
+              console.table(stat);
+              console.log("undecided", player[0].win())
+              return "undecided";
+        }
+    }
+    const declareEnd = (move, index) => {
+        let declare;
+        const decision = _algorythm(move, index);
+        if(decision === "undecided") {
+            return;
+        } else if(decision === "O") {
+            declare = player[0].win();
+        } else declare = player[1].win();
+
+        _announce(declare);
+        _cleanUp();
+    }
+
+    return {declareEnd, resetStat};
+
+})();
 
 
 

@@ -1,44 +1,50 @@
 body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-nav {
   display: flex;
-  justify-content: space-between;
-  margin: 10px 25%;
-}
-nav .grid {
-  display: inline-grid;
-  grid-template: 1fr 1fr/1fr 1fr;
-}
-nav .grid input {
-  padding: 1px;
-}
-nav .error {
-  color: red;
-}
-nav button {
-  margin: 10px 50%;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
 }
 
-.gameBoard {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: repeat(3, 120px);
-  margin: 0 25%;
-}
-.gameBoard [data-field] {
-  color: red;
-  font-weight: bold;
-  font-size: 7rem;
+#game {
   text-align: center;
-  border: 1px solid black;
 }
 
-.declareWin {
-  margin: 0 50%;
+#status {
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-/*# sourceMappingURL=styles.css.map */
+#board {
+  font-weight: 900;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.cell {
+  font-size: 90px;
+  width: 120px;
+  height: 120px;
+  border: 1px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0px; /* Remove the vertical gaps between each cell column */
+  margin-bottom: 20px;
+}
+
+#new-game {
+  padding: 10px 20px;
+  font-size: 20px;
+  cursor: pointer;
+  margin-bottom: 20px; /* Relocate the "New Game" button underneath the display */
+}

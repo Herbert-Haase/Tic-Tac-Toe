@@ -2,27 +2,27 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="styles.css" />
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
   </head>
   <body>
     <div id="game">
-      <div id="status">Player X's Turn</div>
+      <div id="status"></div>
       <button id="new-game">New Game</button>
       <div id="board">
-        <div class="row">
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
+        <div col="0">
+          <div class="cell" row="0"></div>
+          <div class="cell" row="1"></div>
+          <div class="cell" row="2"></div>
         </div>
-        <div class="row">
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
+        <div col="1">
+          <div class="cell" row="0"></div>
+          <div class="cell" row="1"></div>
+          <div class="cell" row="2"></div>
         </div>
-        <div class="row">
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
+        <div col="2">
+          <div class="cell" row="0"></div>
+          <div class="cell" row="1"></div>
+          <div class="cell" row="2"></div>
         </div>
       </div>
     </div>

@@ -14,18 +14,13 @@ body {
 #status {
   font-size: 24px;
   margin-bottom: 20px;
-}
-
-#board {
-  font-weight: 900;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 20px;
+  height: 25px;
+  box-sizing: border-box;
 }
 
 .cell {
   font-size: 90px;
+  font-weight: 900;
   width: 120px;
   height: 120px;
   border: 1px solid #000;
@@ -38,7 +33,7 @@ body {
 #board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0px; /* Remove the vertical gaps between each cell column */
+  gap: 0px;
   margin-bottom: 20px;
 }
 
